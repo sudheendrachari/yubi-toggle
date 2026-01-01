@@ -1,6 +1,8 @@
 # 🔐 YubiToggle
 
-A minimal macOS menu bar utility to toggle your YubiKey's OTP interface on and off. Prevent accidental OTP spam in apps like Slack while keeping your key ready for intentional use.
+A minimal macOS menu bar utility to toggle your YubiKey's OTP interface on and off. **A modern, native alternative to YubiSwitch.**
+
+Prevent accidental OTP spam `cccccc...` in apps like Slack while keeping your key ready for intentional use.
 
 ![macOS](https://img.shields.io/badge/macOS-13.0+-blue)
 ![Swift](https://img.shields.io/badge/Swift-6.0-orange)
