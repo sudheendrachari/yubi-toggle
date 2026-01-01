@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on any tag starting with v
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: fwal/setup-swift@v1
+        with:
+          swift-version: '6.0'
+
+      - name: Build Universal Binary
+        run: |
+          # Build for both Apple Silicon and Intel
+          swift build -c release --arch arm64 --arch x86_64
+
+      - name: Assemble .app Bundle
+        run: |
+          # Define paths
+          APP_NAME="YubiToggle"
+          BUNDLE_DIR="${APP_NAME}.app/Contents"
+          
+          # Create directory structure
+          mkdir -p "${BUNDLE_DIR}/MacOS"
+          mkdir -p "${BUNDLE_DIR}/Resources"
+          
+          # Copy the compiled universal binary
+          # Note: Adjust the binary path if SPM outputs elsewhere on CI
+          cp ".build/apple/Products/Release/${APP_NAME}" "${BUNDLE_DIR}/MacOS/"
+          
+          # Copy the Info.plist
+          cp "Sources/YubiToggle/Resources/Info.plist" "${BUNDLE_DIR}/"
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Create DMG
+        run: |
+          mkdir -p dist
+          create-dmg \
+            --volname "YubiToggle Installer" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "YubiToggle.app" 175 190 \
+            --hide-extension "YubiToggle.app" \
+            --app-drop-link 425 190 \
+            "dist/YubiToggle.dmg" \
+            "YubiToggle.app"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/YubiToggle.dmg
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
