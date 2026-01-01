@@ -32,12 +32,21 @@ brew install ykman
 
 ## 📥 Installation
 
-### Download
+### Homebrew (Recommended)
+
+```bash
+brew tap sudheendrachari/tap
+brew install --cask yubitoggle
+```
+
+### Manual Download
 
 1. Go to [Releases](https://github.com/sudheendrachari/yubi-toggle/releases)
 2. Download `YubiToggle.dmg`
 3. Open the DMG and drag `YubiToggle.app` to Applications
-4. Launch from Applications (you may need to right-click → Open the first time)
+
+> ⚠️ **First Launch**: Since the app isn't notarized, macOS will block it.
+> Go to **System Settings → Privacy & Security**, scroll down, and click **"Open Anyway"** next to the YubiToggle message. This is only needed once.
 
 ### Build from Source
 
