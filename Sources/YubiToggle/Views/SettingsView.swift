@@ -1,5 +1,6 @@
 import SwiftUI
 import ServiceManagement
+import AppKit
 
 /// Settings window with General and About tabs
 struct SettingsView: View {
@@ -91,11 +92,21 @@ struct AboutTab: View {
     private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.2"
     private let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     
+    private var isProperBundle: Bool {
+        Bundle.main.bundlePath.hasSuffix(".app")
+    }
+    
     var body: some View {
         VStack(spacing: 12) {
-            Image(systemName: "key.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(.green)
+            if isProperBundle, let appIcon = NSApplication.shared.applicationIconImage {
+                Image(nsImage: appIcon)
+                    .resizable()
+                    .frame(width: 64, height: 64)
+            } else {
+                Image(systemName: "key.fill")
+                    .font(.system(size: 48))
+                    .foregroundStyle(.green)
+            }
             
             Text("YubiToggle")
                 .font(.title2)
