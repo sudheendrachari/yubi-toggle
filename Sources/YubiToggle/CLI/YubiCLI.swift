@@ -27,8 +27,8 @@ actor YubiCLI {
     /// Possible paths for ykman binary
     private static let ykmanPaths = [
         "/opt/homebrew/bin/ykman",  // Apple Silicon Homebrew
-        "/usr/local/bin/ykman"       // Intel Homebrew
-        "/opt/local/bin/ykman"       // MacPorts
+        "/usr/local/bin/ykman",     // Intel Homebrew
+        "/opt/local/bin/ykman"      // MacPorts
     ]
     
     /// Cached path to ykman binary
