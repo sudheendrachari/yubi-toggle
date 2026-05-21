@@ -9,6 +9,11 @@ let package = Package(
         .executableTarget(
             name: "YubiToggle",
             path: "Sources/YubiToggle",
+            exclude: [
+                "Resources/YubiToggleLogo.png",
+                "Resources/AppIcon.icns",
+                "Resources/Info.plist"
+            ],
             linkerSettings: [
                 .unsafeFlags([
                     "-Xlinker", "-sectcreate",

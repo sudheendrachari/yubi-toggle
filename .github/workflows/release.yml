@@ -38,6 +38,9 @@ jobs:
           
           # Copy the Info.plist
           cp "Sources/YubiToggle/Resources/Info.plist" "${BUNDLE_DIR}/"
+          
+          # Copy the AppIcon.icns
+          cp "Sources/YubiToggle/Resources/AppIcon.icns" "${BUNDLE_DIR}/Resources/"
 
       - name: Install create-dmg
         run: brew install create-dmg
